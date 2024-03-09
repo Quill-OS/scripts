@@ -28,7 +28,7 @@ function exec_remote_rootfs() {
         return 1
     fi
 
-    sshpass -p "$INKBOX_PASSWORD" ssh "$INKBOX_USERNAME@$INKBOX_IP" "$command_to_execute"
+    sshpass -p "$INKBOX_PASSWORD" ssh -t -q "$INKBOX_USERNAME@$INKBOX_IP" "$command_to_execute"
 
     if [ $? -eq 0 ]; then
         icho "$command_to_execute executed successfully on $INKBOX_IP for rootfs"
@@ -45,11 +45,15 @@ function exec_remote_gui() {
         return 1
     fi
 
-    sshpass -p "$INKBOX_PASSWORD" ssh "$INKBOX_USERNAME@$INKBOX_IP" "chroot /kobo /bin/sh -c '$command_to_execute'"
+    sshpass -p "$INKBOX_PASSWORD" ssh -t -q "$INKBOX_USERNAME@$INKBOX_IP" "chroot /kobo /bin/sh -c '$command_to_execute'"
 
     if [ $? -eq 0 ]; then
         icho "$command_to_execute executed successfully on $INKBOX_IP for gui"
     else
         icho "Error executing $command_to_execute. Check the credentials, syntax and try again."
     fi
+}
+
+function login_inkbox() {
+    sshpass -p "$INKBOX_PASSWORD" ssh "$INKBOX_USERNAME@$INKBOX_IP"
 }

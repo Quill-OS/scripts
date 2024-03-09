@@ -39,6 +39,8 @@ done <<< "$directory_list"
 source inkbox_other.sh
 source load_inkbox_variables.sh
 source remote_functions.sh
+source compiled_paths.sh
+source compile_functions.sh
 
 # Source is needed here too, welp
 source inkbox_test.sh
