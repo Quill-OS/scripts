@@ -1,5 +1,4 @@
 #!/bin/bash
-
 icho "Loading compile functions"
 
 CORES=$(nproc)
@@ -12,7 +11,7 @@ function compiler_path_add() {
     if [[ ":$PATH:" != *":$dir_path:"* ]]; then
         export PATH="$PATH:$dir_path"
         echo "Added $dir_path to PATH"
-    else
+    #else
         #echo Directory is already in path: $dir_path
     fi
 
@@ -20,7 +19,7 @@ function compiler_path_add() {
     if [[ ":$PATH:" != *":$dir_path:"* ]]; then
         export PATH="$PATH:$dir_path"
         echo "Added $dir_path to PATH"
-    else
+    #else
         #echo Directory is already in path: $dir_path
     fi
 }

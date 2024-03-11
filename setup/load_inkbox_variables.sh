@@ -1,5 +1,4 @@
 #!/bin/bash
-
 if [ -e "$script_dir/local_inkbox_settings.ini" ]; then
     source "$script_dir/local_inkbox_settings.ini"
     icho "Using local_inkbox_settings.ini from script directory: $script_dir"

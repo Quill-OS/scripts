@@ -1,5 +1,4 @@
 #!/bin/bash
-
 enter_repo "qt5-kobo-platform-plugin"
 pull_submodules "FBInk/i2c-tools"
 make_clean

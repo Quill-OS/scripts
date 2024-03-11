@@ -1,5 +1,4 @@
 #!/bin/bash
-
 exec_remote_rootfs "killall -9 inkbox inkbox-bin 2048 2048-bin"
 exec_remote_rootfs "umount /kobo/mnt/onboard/.adds/qt-linux-5.15.2-kobo/plugins/platforms/libkobo.so"
 exec_remote_rootfs "rm /tmp/libkobo.so"

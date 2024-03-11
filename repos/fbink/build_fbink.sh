@@ -1,5 +1,4 @@
 #!/bin/bash
-
 enter_repo "FBInk"
 pull_submodules "i2c-tools"
 make_clean

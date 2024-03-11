@@ -1,5 +1,4 @@
 #!/bin/bash
-
 icho "Loading remote functions"
 
 function upload_file() {
