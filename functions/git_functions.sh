@@ -15,7 +15,7 @@ function clone_repo() {
     repo_link="$repo_link/$repo_name.git"
     repo_path="$INKBOX_REPO_PATHS/$repo_name"
 
-    if [ -z "$(ls -A $repo_path)" ]; then
+    if [ -z "$(ls -A $repo_path 2>/dev/null)" ]; then
         echo "Cloning repo: $repo_name"
         git clone --recurse-submodules $repo_link $repo_path
     else
@@ -39,8 +39,12 @@ function inkbox_get_all_repos() {
     done
 }
 
+ink_repos=("rootfs" "qt5-kobo-platform-plugin" "FBInk" "inkbox" "kernel" "gui-bundle" "oobe-inkbox" "imgtool" "recoveryfs" "gui-rootfs" "inkbox-power-daemon" "epubtool" "diagnostics" "lockscreen")
 function inkbox_get_essential_repos() {
     icho "Getting essential repos"
+    for repo in "${ink_repos[@]}"; do
+        clone_repo $repo
+    done
 }
 
 function enter_repo() {
@@ -48,7 +52,7 @@ function enter_repo() {
 
     cd $INKBOX_REPO_PATHS
 
-    if [ -z "$(ls -A $repo)" ]; then
+    if [ -z "$(ls -A $repo 2>/dev/null)" ]; then
         icho "Repo $repo doesn't exist, cloning it..."
         clone_repo $repo
     fi

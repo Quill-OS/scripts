@@ -34,7 +34,7 @@ function make_clean() {
 
 function pull_submodules() {
     directory="$1"
-    if [ -z "$(ls -A $directory)" ]; then
+    if [ -z "$(ls -A $directory 2>/dev/null)" ]; then
         git submodule update --init --recursive
     fi
 }
