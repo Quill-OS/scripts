@@ -47,9 +47,11 @@ source load_inkbox_variables.sh
 source remote_functions.sh
 source compiled_paths.sh
 source compile_functions.sh
-source remote_functions.sh
+source git_functions.sh
 
-if [ "$INKBOX_STOP" = 0 ]; then
+mkdir -p "$INKBOX_REPO_PATHS/$INKBOX_OUT_DIR"
+
+if [ "$INKBOX_TEST" = 1 ] && [ "$INKBOX_STOP" = 0 ]; then
     # Source is needed here too, welp
     source inkbox_test.sh
 fi

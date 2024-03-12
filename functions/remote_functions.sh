@@ -56,3 +56,13 @@ function exec_remote_gui() {
 function login_inkbox() {
     sshpass -p "$INKBOX_PASSWORD" ssh "$INKBOX_USERNAME@$INKBOX_IP"
 }
+
+function sshfs_inkbox() {
+    sshfs_path="/mnt/inkbox"
+    if [ -z "$(ls -A $sshfs_path 2>/dev/null)" ]; then
+        sudo mkdir -p $sshfs_path
+        sudo chown $USER:$USER $sshfs_path
+    fi
+    # sshpass won't work here
+    sshfs "$INKBOX_USERNAME@$INKBOX_IP:/" $sshfs_path
+}
