@@ -66,3 +66,12 @@ function sshfs_inkbox() {
     # sshpass won't work here
     sshfs "$INKBOX_USERNAME@$INKBOX_IP:/" $sshfs_path
 }
+
+function prepare_inkbox() {
+    exec_remote_rootfs "echo true > /boot/flags/USBNET_ENABLE"
+    exec_remote_rootfs "echo true > /boot/flags/RW_ROOTFS"
+    exec_remote_rootfs "echo true > /boot/flags/INITRD_DEBUG"
+    exec_remote_rootfs "echo true > /boot/flags/GUI_DEBUG"
+    exec_remote_rootfs "echo true > /boot/flags/IPD_DEBUG"
+    exec_remote_rootfs "reboot"
+}
