@@ -53,6 +53,37 @@ function exec_remote_gui() {
     fi
 }
 
+function exec_remote_gui_telnet() {
+    local command_to_execute="$1"
+
+    if [ -z "$command_to_execute" ]; then
+        echo "Usage: exec_remote_gui_telnet <command>"
+        return 1
+    fi
+
+    cmd="\"/bin/sh -c \'$command_to_execute\'\r\""
+    expect_script=$(mktemp)
+    {
+        echo '#!/usr/bin/expect'
+        echo 'set timeout 20'
+        echo 'set name '"$INKBOX_IP"
+        echo 'set user '"$INKBOX_USERNAME"
+        echo 'set password '"$INKBOX_PASSWORD"
+        echo 'spawn telnet $name'
+        echo 'expect "kobo login:"'
+        echo 'send "$user\r"'
+        echo 'expect "#"'
+        echo "send $cmd"
+        echo 'expect "~ #"'
+        echo 'exit'
+    } > "$expect_script"
+
+    chmod +x "$expect_script"
+    "$expect_script"
+
+    rm "$expect_script"
+}
+
 function login_inkbox() {
     sshpass -p "$INKBOX_PASSWORD" ssh "$INKBOX_USERNAME@$INKBOX_IP"
 }

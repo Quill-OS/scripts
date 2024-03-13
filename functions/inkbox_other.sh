@@ -8,12 +8,12 @@ function icho() {
 
 function install_debian_packages() {
     echo "Installing needed packages with apt-get..."
-    sudo apt-get install git openssh-server sshpass squashfs-tools sshfs
+    sudo apt-get install git openssh-server sshpass squashfs-tools sshfs expect
 }
 
 function install_arch_packages() {
     echo "Installing needed packages with pacman..."
-    sudo pacman -S git openssh sshpass squashfs-tools sshfs
+    sudo pacman -S git openssh sshpass squashfs-tools sshfs expect
 }
 
 function install_packages() {
@@ -29,7 +29,7 @@ function install_packages() {
     fi
 }
 
-NEEDED_COMMANDS=("ssh" "git" "sshpass" "mksquashfs" "sshfs")
+NEEDED_COMMANDS=("ssh" "git" "sshpass" "mksquashfs" "sshfs" "expect")
 
 function check_for_tools() {
     icho "Checking for tools"

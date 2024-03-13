@@ -10,4 +10,4 @@ to customise the settings (ip address of inkbox, username, password, etc) execut
 
 to make all commands work without issues, run `prepare_inkbox` to set some flags. The device will be rebooted
 
-If a command is needed and you don't have it, you will be promptet to install it. **If you are missing rust (the `cargo` command too) you need to install it manually.
+If a command is needed and you don't have it, you will be promptet to install it. **If you are missing rust (the `cargo` command too)** you need to install it manually. That's because there are many ways to install it (remote script, package manager)
