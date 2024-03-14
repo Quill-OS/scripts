@@ -3,8 +3,14 @@
 # If squashfs-root/inkbox exists, use keys from there - otherwise from tmp and if there are none - create them
 
 function create_key() {
-    local path="$1"
-
+    local file="$1" # Without extension or anything
+    private_key="$file-private.pem"
+    public_key="$file-public.pem"
+    cpath=$(pwd)
+    cd "$INKBOX_REPO_PATHS/scripts/keys/tmp"
+    openssl genrsa -out $private_key 2048
+    openssl rsa -in $private_key -out $public_key -outform PEM -pubout
+    cd "$cpath"
 }
 
 if [ $# -ne 2 ]; then
@@ -26,5 +32,32 @@ if [ ! -f "$2" ]; then
     return
 fi
 
-key_path=""
+key_path="" # Private one obviously
 
+cpath=$(pwd)
+key_front_path="$INKBOX_REPO_PATHS/scripts/keys"
+cd "$INKBOX_REPO_PATHS/scripts/keys"
+case "$1" in
+    device)
+        kpath="squashfs-root/inkbox/$INKBOX_DEVICE/private.pem"
+        if [ -f $kpath ]; then
+            key_path="$key_front_path/$kpath"
+        else
+            key_path="$key_front_path/tmp/device-private.pem"
+            if [ ! -f $key_path ]; then
+                echo "Device key does not exist, creating one in tmp."
+                create_key "device"
+            fi
+        fi
+        ;;
+    kobox)
+        echo "TODO :P"
+        ;;
+    applications)
+        echo "TODO :P"
+        ;;
+esac
+
+cd "$cpath"
+
+echo "Choosen key: $key_path"

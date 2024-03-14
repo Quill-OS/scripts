@@ -15,3 +15,12 @@ If your system doesn't request DHCP on the usbnet automatically, use `nmtui` and
 to make all commands work without issues, run `prepare_inkbox` to set some flags. The device will be rebooted
 
 If a command is needed and you don't have it, you will be promptet to install it. **If you are missing rust (the `cargo` command too)** you need to install it manually. That's because there are many ways to install it (remote script, package manager)
+
+## Keys
+keys will be generated automatically in `keys/tmp/`. If you want to provide existing ones, do it in:
+- `keys/squashfs-root/inkbox/device-id-like-n306/private.pem` and public.pem in the same directory for device specific key
+- `keys/squashfs-root/applications/` for user apps
+- `keys/squashfs-root/kobox/`: `graphic` dir and `nographic` dir
+
+TLDR:
+![key-tree](img/key-tree.png)

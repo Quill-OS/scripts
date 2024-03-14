@@ -7,7 +7,7 @@ INKBOX_REPO_PATHS="/home/build/inkbox" # No / at the end
 #script_dir="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 # This doesn't always work, so we will go the dumb route.
 
-excluded_dirs=(".git" "keys")
+excluded_dirs=(".git" "keys" "img")
 
 script_dir="$INKBOX_REPO_PATHS/scripts"
 
