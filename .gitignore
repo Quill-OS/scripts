@@ -1,1 +1,7 @@
 local_inkbox_settings.ini
+*.pem
+keys/*/
+keys/**/
+keys/*.sqsh
+keys/**/*.sqsh
+!keys/overwrite

@@ -104,5 +104,23 @@ function prepare_inkbox() {
     exec_remote_rootfs "echo true > /boot/flags/INITRD_DEBUG"
     exec_remote_rootfs "echo true > /boot/flags/GUI_DEBUG"
     exec_remote_rootfs "echo true > /boot/flags/IPD_DEBUG"
+    exec_remote_rootfs "echo 08:8c:24:48:ed:b3 > /boot/flags/USBNET_HOST_ADDRESS"
+    exec_remote_rootfs "echo 5c:49:73:21:f2:bf > /boot/flags/USBNET_DEVICE_ADDRESS"
     exec_remote_rootfs "reboot"
 }
+
+function get_device() {
+    if [[ -n $INKBOX_DEVICE_OVERWRITE ]]; then
+        INKBOX_DEVICE="$INKBOX_DEVICE_OVERWRITE"
+        echo "Your device is $INKBOX_DEVICE because of overwrite"
+    else
+        DETECTED_INKBOX_DEVICE=$(exec_remote_rootfs "cat /opt/inkbox_device")
+        if [[ -n $DETECTED_INKBOX_DEVICE && ${#DETECTED_INKBOX_DEVICE} -ge 3 && ${#DETECTED_INKBOX_DEVICE} -le 6 ]]; then
+            INKBOX_DEVICE=$(echo $DETECTED_INKBOX_DEVICE | tr -d '\n\t\r ') # Cleaning is needed
+            echo "Your device is $INKBOX_DEVICE because of detection"
+        else
+            ero "Device is not set and couldn't be detected. Some commands may error out. Be aware of it and don't try to go to me if you get this error and won't read it. It's in red, so it's important right?"
+        fi
+    fi
+}
+get_device

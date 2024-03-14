@@ -7,7 +7,7 @@ INKBOX_REPO_PATHS="/home/build/inkbox" # No / at the end
 #script_dir="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 # This doesn't always work, so we will go the dumb route.
 
-excluded_dirs=(".git")
+excluded_dirs=(".git" "keys")
 
 script_dir="$INKBOX_REPO_PATHS/scripts"
 
@@ -31,7 +31,7 @@ add_directory_to_path() {
         export PATH="$PATH:$dir_path"
         echo "Added $dir_path to PATH"
     else
-        echo Directory is already in path: $dir_path
+        icho "Directory is already in path: $dir_path"
     fi
 }
 
