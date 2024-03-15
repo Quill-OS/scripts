@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Running source run_http_server.sh $rootfs_dir & for example can, after it is finished will change the path back anyway
+# Be aware of it
+
 path="$1"
 
 if [ -z "$path" ]; then
@@ -7,8 +10,7 @@ if [ -z "$path" ]; then
     return 1
 fi
 
-cpath_rhs=$(save_path "send-http-server")
-clone_repo "send-http-server"
-cd "$INKBOX_REPO_PATHS/send-http-server"
-cargo run --release -- -t "$cpath_rhs/$path"
+save_path "send-http-server"
+enter_repo "send-http-server"
+cargo run --release -- -t "$path"
 restore_path "send-http-server"

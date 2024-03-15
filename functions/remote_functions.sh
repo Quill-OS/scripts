@@ -53,7 +53,7 @@ function exec_remote_gui() {
     fi
 }
 
-function exec_remote_gui_telnet() {
+function exec_remote_init() {
     local command_to_execute="$1"
 
     if [ -z "$command_to_execute" ]; then
@@ -65,7 +65,7 @@ function exec_remote_gui_telnet() {
     expect_script=$(mktemp)
     {
         echo '#!/usr/bin/expect'
-        echo 'set timeout 20'
+        echo 'set timeout 500' # Idk
         echo 'set name '"$INKBOX_IP"
         echo 'set user '"$INKBOX_USERNAME"
         echo 'set password '"$INKBOX_PASSWORD"

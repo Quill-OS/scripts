@@ -9,8 +9,6 @@ comp_alg="xz"
 comp_opt_1="-Xdict-size"
 comp_opt_2="100%"
 
-rootfs_out="$INKBOX_REPO_PATHS/$INKBOX_OUT_DIR/rootfs.squashfs"
-
 source build_fbink.sh
 
 enter_repo "rootfs"
@@ -24,13 +22,13 @@ cp $FBDEPTH_PATH_KOBO opt/bin/fbink/fbdepth-kobo
 git rev-parse HEAD > .commit
 chmod u+s "bin/busybox"
 find . -type f -name ".keep" -exec rm {} \;
-rm -f $rootfs_out
+rm -f $ROOTFS_OUT
 # -wildcards and -e "*.keep" won't work
-mksquashfs . $rootfs_out -b $block_size -comp $comp_alg $comp_opt_1 $comp_opt_2 -always-use-fragments -all-root -e .git -e .gitignore
+mksquashfs . $ROOTFS_OUT -b $block_size -comp $comp_alg $comp_opt_1 $comp_opt_2 -always-use-fragments -all-root -e .git -e .gitignore
 rm -f .commit
 find . -type d ! -path "*.git*" -empty -exec touch '{}'/.keep \;
 
-source sign.sh "device" $rootfs_out
+source sign.sh "device" $ROOTFS_OUT
 
 restore_path "rootfs"
 
