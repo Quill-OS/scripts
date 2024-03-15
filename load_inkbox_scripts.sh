@@ -7,7 +7,7 @@ INKBOX_REPO_PATHS="/home/build/inkbox" # No / at the end
 #script_dir="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 # This doesn't always work, so we will go the dumb route.
 
-excluded_dirs=(".git" "keys" "img")
+excluded_dirs=(".git" "keys/tmp" "keys/squashfs-root" "img")
 
 script_dir="$INKBOX_REPO_PATHS/scripts"
 
@@ -50,6 +50,7 @@ source compile_functions.sh
 source git_functions.sh
 
 mkdir -p "$INKBOX_REPO_PATHS/$INKBOX_OUT_DIR"
+mkdir -p "/tmp/inkbox"
 
 if [ "$INKBOX_TEST" = 1 ] && [ "$INKBOX_STOP" = 0 ]; then
     # Source is needed here too, welp

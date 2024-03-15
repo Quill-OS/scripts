@@ -6,11 +6,11 @@ function create_key() {
     local file="$1" # Without extension or anything
     private_key="$file-private.pem"
     public_key="$file-public.pem"
-    cpath=$(pwd)
+    save_path "create_key"
     cd "$INKBOX_REPO_PATHS/scripts/keys/tmp"
     openssl genrsa -out $private_key 2048
     openssl rsa -in $private_key -out $public_key -outform PEM -pubout
-    cd "$cpath"
+    restore_path "create_key"
 }
 
 if [ $# -ne 2 ]; then
@@ -34,7 +34,7 @@ fi
 
 key_path="" # Private one obviously
 
-cpath=$(pwd)
+save_path "sign"
 key_front_path="$INKBOX_REPO_PATHS/scripts/keys"
 cd "$INKBOX_REPO_PATHS/scripts/keys"
 case "$1" in
@@ -58,6 +58,11 @@ case "$1" in
         ;;
 esac
 
-cd "$cpath"
+restore_path "sign"
 
 echo "Choosen key: $key_path"
+
+file_to_sign=$2
+signed_out="$file_to_sign.dgst"
+
+openssl dgst -sha256 -sign $key_path -out $signed_out $file_to_sign

@@ -7,8 +7,8 @@ if [ -z "$path" ]; then
     return 1
 fi
 
-cpath=$(pwd)
+cpath_rhs=$(save_path "send-http-server")
 clone_repo "send-http-server"
 cd "$INKBOX_REPO_PATHS/send-http-server"
-cargo run --release -- -d "$cpath/$path"
-cd $cpath
+cargo run --release -- -t "$cpath_rhs/$path"
+restore_path "send-http-server"

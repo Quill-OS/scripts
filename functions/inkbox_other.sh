@@ -85,3 +85,34 @@ function check_for_tools() {
     done
 }
 check_for_tools
+
+save_path() {
+    if [ -z "$1" ]; then
+        ero "Usage: save_path <name>"
+        return 1
+    fi
+    
+    local tempfile
+    tempfile=$(mktemp -p /tmp/inkbox -u "$1.XXXXXX") || return 1
+    
+    pwd > "$tempfile"
+    echo -n $(pwd)
+}
+
+restore_path() {
+    if [ -z "$1" ]; then
+        ero "Usage: restore_path <name>"
+        return 1
+    fi
+    
+    local tempfile
+    tempfile=$(find /tmp/inkbox -type f -name "$1.*" | head -n 1)
+
+    if [ -f "$tempfile" ]; then
+        cd "$(cat "$tempfile")"
+        echo "Path restored from: $tempfile"
+        rm "$tempfile"
+    else
+        ero "No path found for $1"
+    fi
+}
