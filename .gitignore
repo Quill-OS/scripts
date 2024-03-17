@@ -4,4 +4,4 @@ keys/*/
 keys/**/
 keys/*.sqsh
 keys/**/*.sqsh
-!keys/overwrite
+!keys/tmp

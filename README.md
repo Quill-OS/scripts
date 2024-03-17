@@ -8,7 +8,12 @@ run all these commands with `source` or `. command`
 
 to customise the settings (ip address of inkbox, username, password, etc) execute `create_personal_values.sh`. From now on values will be loaded from `local_inkbox_settings.ini`
 
-On first connection, connect to the device manually for fingerprint ssh fun
+On first connection, connect to the device manually for fingerprint ssh fun. If you are using many inkbox devices, consider doing this horrible thing. In `~/.ssh/config` put:
+```
+Host *
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+```
 
 If your system doesn't request DHCP on the usbnet automatically, use `nmtui` and in the interface name set the MAC address from `remote_functions.sh` file. You will find it.
 
