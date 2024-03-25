@@ -1,4 +1,4 @@
-local_inkbox_settings.ini
+local_qos_settings.ini
 *.pem
 keys/*/
 keys/**/

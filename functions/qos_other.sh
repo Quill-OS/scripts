@@ -1,7 +1,7 @@
 #!/bin/bash
 function icho() {
     local message="$1"
-    if [ "$INKBOX_DEBUG_MESSAGES" = "1" ]; then
+    if [ "$QOS_DEBUG_MESSAGES" = "1" ]; then
         echo $message
     fi
 }
@@ -31,7 +31,7 @@ function install_packages() {
       install_debian_packages
     else
       ero "Unsupported package manager. Please install $cmd manually."
-      INKBOX_STOP=1
+      QOS_STOP=1
       return
     fi
 }
@@ -73,6 +73,9 @@ function check_for_tools() {
 
     . "$HOME/.cargo/env" 1>/dev/null 2>/dev/null
     rustup default stable 1>/dev/null 2>/dev/null
+    rustup toolchain install nightly
+    rustup target add armv7-unknown-linux-musleabihf
+    rustup target add armv7-unknown-linux-gnueabihf
     for cmd in "${INSTALL_COMMANDS[@]}"; do
         if ! command -v "$cmd" &> /dev/null; then
             packages=""
@@ -80,7 +83,7 @@ function check_for_tools() {
                 packages+=" $item"
             done
             ero "Install these commands by yourself:$packages"
-            INKBOX_STOP=1
+            QOS_STOP=1
         fi
     done
 }
@@ -93,7 +96,7 @@ save_path() {
     fi
     
     local tempfile
-    tempfile=$(mktemp -p /tmp/inkbox -u "$1.XXXXXX") || return 1
+    tempfile=$(mktemp -p /tmp/qos -u "$1.XXXXXX") || return 1
     
     pwd > "$tempfile"
     echo -n $(pwd)
@@ -106,7 +109,7 @@ restore_path() {
     fi
     
     local tempfile
-    tempfile=$(find /tmp/inkbox -type f -name "$1.*" | head -n 1)
+    tempfile=$(find /tmp/qos -type f -name "$1.*" | head -n 1)
 
     if [ -f "$tempfile" ]; then
         cd "$(cat "$tempfile")"

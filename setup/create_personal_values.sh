@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cp inkbox_settings.ini ../local_inkbox_settings.ini
+cp qos_settings.ini ../local_qos_settings.ini

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-exec_remote_rootfs "service inkbox_gui stop"
+exec_remote_rootfs "service qos_gui stop"
 exec_remote_rootfs "killall squashfuse"
 exec_remote_rootfs "killall unionfs"
 exec_remote_init "pkill unionfs"
-exec_remote_init "pkill inkbox-splash"
+exec_remote_init "pkill qos-splash"
 exec_remote_init "pkill /usr/bin/inkvt.armhf"
 exec_remote_init "pkill initrd-fifo"
 exec_remote_init "pkill openrc-run.sh"
@@ -24,8 +24,8 @@ exec_remote_init "mount /dev/mmcblk0p3 /tmp/p3"
 exec_remote_init "rm -f /tmp/p3/rootfs.squashfs"
 exec_remote_init "rm -f /tmp/p3/rootfs.squashfs.dgst"
 
-download_sign="wget -O /tmp/p3/rootfs.squashfs.dgst http://$INKBOX_HOST_IP:$free_port/rootfs.squashfs.dgst"
-download_rootfs="wget -O /tmp/p3/rootfs.squashfs http://$INKBOX_HOST_IP:$free_port/rootfs.squashfs"
+download_sign="wget -O /tmp/p3/rootfs.squashfs.dgst http://$QOS_HOST_IP:$free_port/rootfs.squashfs.dgst"
+download_rootfs="wget -O /tmp/p3/rootfs.squashfs http://$QOS_HOST_IP:$free_port/rootfs.squashfs"
 
 exec_remote_init $download_sign
 exec_remote_init $download_rootfs

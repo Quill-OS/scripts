@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# If squashfs-root/inkbox exists, use keys from there - otherwise from tmp and if there are none - create them
+# If squashfs-root/qos exists, use keys from there - otherwise from tmp and if there are none - create them
 
 function create_key() {
     local file="$1" # Without extension or anything
     private_key="$file-private.pem"
     public_key="$file-public.pem"
     save_path "create_key"
-    cd "$INKBOX_REPO_PATHS/scripts/keys/tmp"
+    cd "$QOS_REPO_PATHS/scripts/keys/tmp"
     openssl genrsa -out $private_key 2048
     openssl rsa -in $private_key -out $public_key -outform PEM -pubout
     restore_path "create_key"
@@ -35,11 +35,11 @@ fi
 key_path="" # Private one obviously
 
 save_path "sign"
-key_front_path="$INKBOX_REPO_PATHS/scripts/keys"
-cd "$INKBOX_REPO_PATHS/scripts/keys"
+key_front_path="$QOS_REPO_PATHS/scripts/keys"
+cd "$QOS_REPO_PATHS/scripts/keys"
 case "$1" in
     device)
-        kpath="squashfs-root/inkbox/$INKBOX_DEVICE/private.pem"
+        kpath="squashfs-root/qos/$QOS_DEVICE/private.pem"
         if [ -f $kpath ]; then
             key_path="$key_front_path/$kpath"
         else

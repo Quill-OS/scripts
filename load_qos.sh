@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INKBOX_REPO_PATHS="/home/build/inkbox" # No / at the end
+QOS_REPO_PATHS="/home/build/qos" # No / at the end
 
 # https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself?source=post_page-----b5fcee4b2a34--------------------------------
 # What an awfull link
@@ -9,7 +9,7 @@ INKBOX_REPO_PATHS="/home/build/inkbox" # No / at the end
 
 excluded_dirs=(".git" "keys/tmp" "keys/squashfs-root" "img")
 
-script_dir="$INKBOX_REPO_PATHS/scripts"
+script_dir="$QOS_REPO_PATHS/scripts"
 
 add_directory_to_path() {
     dir_path="$1"
@@ -41,19 +41,19 @@ while IFS= read -r dir; do
     add_directory_to_path "$dir"
 done <<< "$directory_list"
 
-INKBOX_STOP=0
-source inkbox_other.sh
-source load_inkbox_variables.sh
+QOS_STOP=0
+source qos_other.sh
+source load_qos_variables.sh
 source remote_functions.sh
 source compiled_paths.sh
 source compile_functions.sh
 source git_functions.sh
 
-mkdir -p "$INKBOX_REPO_PATHS/$INKBOX_OUT_DIR"
-mkdir -p "/tmp/inkbox"
+mkdir -p "$QOS_REPO_PATHS/$QOS_OUT_DIR"
+mkdir -p "/tmp/qos"
 
-if [ "$INKBOX_TEST" = 1 ] && [ "$INKBOX_STOP" = 0 ]; then
+if [ "$QOS_TEST" = 1 ] && [ "$QOS_STOP" = 0 ]; then
     # Source is needed here too, welp
-    source inkbox_test.sh
+    source qos_test.sh
 fi
-INKBOX_STOP=0
+QOS_STOP=0

@@ -10,10 +10,10 @@ function upload_file() {
         return 1
     fi
 
-    sshpass -p "$INKBOX_PASSWORD" scp "$local_file" "$INKBOX_USERNAME@$INKBOX_IP:$remote_path"
+    sshpass -p "$QOS_PASSWORD" scp "$local_file" "$QOS_USERNAME@$QOS_IP:$remote_path"
 
     if [ $? -eq 0 ]; then
-        icho "$local_file successfully uploaded to $INKBOX_IP:$remote_path"
+        icho "$local_file successfully uploaded to $QOS_IP:$remote_path"
     else
         icho "Error uploading file. Check the credentials (or ssh key conflicts) and try again."
     fi
@@ -27,10 +27,10 @@ function exec_remote_rootfs() {
         return 1
     fi
 
-    sshpass -p "$INKBOX_PASSWORD" ssh -t -q "$INKBOX_USERNAME@$INKBOX_IP" "$command_to_execute"
+    sshpass -p "$QOS_PASSWORD" ssh -t -q "$QOS_USERNAME@$QOS_IP" "$command_to_execute"
 
     if [ $? -eq 0 ]; then
-        icho "$command_to_execute executed successfully on $INKBOX_IP for rootfs"
+        icho "$command_to_execute executed successfully on $QOS_IP for rootfs"
     else
         icho "Error executing $command_to_execute. Check the credentials, syntax and try again."
     fi
@@ -44,10 +44,10 @@ function exec_remote_gui() {
         return 1
     fi
 
-    sshpass -p "$INKBOX_PASSWORD" ssh -t -q "$INKBOX_USERNAME@$INKBOX_IP" "chroot /kobo /bin/sh -c '$command_to_execute'"
+    sshpass -p "$QOS_PASSWORD" ssh -t -q "$QOS_USERNAME@$QOS_IP" "chroot /kobo /bin/sh -c '$command_to_execute'"
 
     if [ $? -eq 0 ]; then
-        icho "$command_to_execute executed successfully on $INKBOX_IP for gui"
+        icho "$command_to_execute executed successfully on $QOS_IP for gui"
     else
         icho "Error executing $command_to_execute. Check the credentials, syntax and try again."
     fi
@@ -66,9 +66,9 @@ function exec_remote_init() {
     {
         echo '#!/usr/bin/expect'
         echo 'set timeout 500' # Idk
-        echo 'set name '"$INKBOX_IP"
-        echo 'set user '"$INKBOX_USERNAME"
-        echo 'set password '"$INKBOX_PASSWORD"
+        echo 'set name '"$QOS_IP"
+        echo 'set user '"$QOS_USERNAME"
+        echo 'set password '"$QOS_PASSWORD"
         echo 'spawn telnet $name'
         echo 'expect "kobo login:"'
         echo 'send "$user\r"'
@@ -84,21 +84,21 @@ function exec_remote_init() {
     rm "$expect_script"
 }
 
-function login_inkbox() {
-    sshpass -p "$INKBOX_PASSWORD" ssh "$INKBOX_USERNAME@$INKBOX_IP"
+function login_qos() {
+    sshpass -p "$QOS_PASSWORD" ssh "$QOS_USERNAME@$QOS_IP"
 }
 
-function sshfs_inkbox() {
-    sshfs_path="/mnt/inkbox"
+function sshfs_qos() {
+    sshfs_path="/mnt/qos"
     if [ -z "$(ls -A $sshfs_path 2>/dev/null)" ]; then
         sudo mkdir -p $sshfs_path
         sudo chown $USER:$USER $sshfs_path
     fi
     # sshpass won't work here
-    sshfs "$INKBOX_USERNAME@$INKBOX_IP:/" $sshfs_path
+    sshfs "$QOS_USERNAME@$QOS_IP:/" $sshfs_path
 }
 
-function prepare_inkbox() {
+function prepare_qos() {
     exec_remote_rootfs "echo true > /boot/flags/USBNET_ENABLE"
     exec_remote_rootfs "echo true > /boot/flags/RW_ROOTFS"
     exec_remote_rootfs "echo true > /boot/flags/INITRD_DEBUG"
@@ -110,14 +110,14 @@ function prepare_inkbox() {
 }
 
 function get_device() {
-    if [[ -n $INKBOX_DEVICE_OVERWRITE ]]; then
-        INKBOX_DEVICE="$INKBOX_DEVICE_OVERWRITE"
-        echo "Your device is $INKBOX_DEVICE because of overwrite"
+    if [[ -n $QOS_DEVICE_OVERWRITE ]]; then
+        QOS_DEVICE="$QOS_DEVICE_OVERWRITE"
+        echo "Your device is $QOS_DEVICE because of overwrite"
     else
-        DETECTED_INKBOX_DEVICE=$(exec_remote_rootfs "cat /opt/inkbox_device")
-        if [[ -n $DETECTED_INKBOX_DEVICE && ${#DETECTED_INKBOX_DEVICE} -ge 3 && ${#DETECTED_INKBOX_DEVICE} -le 6 ]]; then
-            INKBOX_DEVICE=$(echo $DETECTED_INKBOX_DEVICE | tr -d '\n\t\r ') # Cleaning is needed
-            echo "Your device is $INKBOX_DEVICE because of detection"
+        DETECTED_QOS_DEVICE=$(exec_remote_rootfs "cat /opt/qos_device")
+        if [[ -n $DETECTED_QOS_DEVICE && ${#DETECTED_QOS_DEVICE} -ge 3 && ${#DETECTED_QOS_DEVICE} -le 6 ]]; then
+            QOS_DEVICE=$(echo $DETECTED_QOS_DEVICE | tr -d '\n\t\r ') # Cleaning is needed
+            echo "Your device is $QOS_DEVICE because of detection"
         else
             ero "Device is not set and couldn't be detected. Some commands may error out. Be aware of it and don't try to go to me if you get this error and won't read it. It's in red, so it's important right?"
         fi
