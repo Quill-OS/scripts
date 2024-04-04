@@ -6,29 +6,23 @@ CORES=$(nproc)
 function compiler_path_add() {
     # export PATH=$PATH:$QOS_REPO_PATHS/kernel/toolchain/armv7l-linux-musleabihf-cross/bin
     # export PATH=$PATH:$QOS_REPO_PATHS/compiled-binaries/arm-kobo-linux-gnueabihf/bin/
+    MUSL_TOOLCHAIN_PATH="$QOS_REPO_PATHS/kernel/toolchain/armv7l-linux-musleabihf-cross/bin"
+    GLIBC_TOOLCHAIN_PATH="$QOS_REPO_PATHS/compiled-binaries/arm-kobo-linux-gnueabihf/bin/"
 
-    dir_path="$QOS_REPO_PATHS/kernel/toolchain/armv7l-linux-musleabihf-cross/bin"
-    if [[ ":$PATH:" != *":$dir_path:"* ]]; then
-        export PATH="$PATH:$dir_path"
-        echo "Added $dir_path to PATH"
-    #else
-        #echo Directory is already in path: $dir_path
-    fi
-
-    dir_path="$QOS_REPO_PATHS/compiled-binaries/arm-kobo-linux-gnueabihf/bin/"
-    if [[ ":$PATH:" != *":$dir_path:"* ]]; then
-        export PATH="$PATH:$dir_path"
-        echo "Added $dir_path to PATH"
-    #else
-        #echo Directory is already in path: $dir_path
-    fi
+    add_to_path "$MUSL_TOOLCHAIN_PATH"
+    add_to_path "$GLIBC_TOOLCHAIN_PATH"
 }
-compiler_path_add
 
 function make_clean() {
     if [ "$QOS_CLEAN" = "1" ]; then
         make clean
         make distclean
+    fi
+}
+
+function cargo_clean() {
+    if [ "$QOS_CLEAN" = "1" ]; then
+        cargo clean
     fi
 }
 

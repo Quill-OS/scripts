@@ -11,7 +11,7 @@ excluded_dirs=(".git" "keys/tmp" "keys/squashfs-root" "img")
 
 script_dir="$QOS_REPO_PATHS/scripts"
 
-add_directory_to_path() {
+add_to_path() {
     dir_path="$1"
 
     match_found=false
@@ -38,22 +38,39 @@ add_directory_to_path() {
 directory_list=$(find ${script_dir} -type d)
 
 while IFS= read -r dir; do
-    add_directory_to_path "$dir"
+    add_to_path "$dir"
 done <<< "$directory_list"
 
 QOS_STOP=0
-source qos_other.sh
-source load_qos_variables.sh
-source remote_functions.sh
-source compiled_paths.sh
-source compile_functions.sh
-source git_functions.sh
 
+source qos_load_variables.sh
+
+source qos_other.sh
+
+source qos_tools.sh
+if tmp_file_check "tools"; then
+    check_for_tools
+    check_for_libs
+else
+    echo "Tools were already checked, skipping..."
+fi
+
+source qos_remote_functions.sh
+get_device
+
+source qos_compiled_paths.sh
+
+source qos_compile_functions.sh
+compiler_path_add
+
+source qos_git_functions.sh
+
+# Rest
 mkdir -p "$QOS_REPO_PATHS/$QOS_OUT_DIR"
-mkdir -p "/tmp/qos"
+mkdir -p "$QOS_TMP"
 
 if [ "$QOS_TEST" = 1 ] && [ "$QOS_STOP" = 0 ]; then
-    # Source is needed here too, welp
+    # Source is needed here too, ( everywhere... ) welp
     source qos_test.sh
 fi
 QOS_STOP=0

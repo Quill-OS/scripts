@@ -1,4 +1,4 @@
-First, if you cloned this repo to an other path than `/home/build/qos` go to load_qos_scripts.sh and edit QOS_REPO_PATHS to your needs.
+First, if you cloned this repo to an other path than `/home/build/qos/` go to load_qos_scripts.sh and edit QOS_REPO_PATHS to your needs.
 
 Then, to load all these commands ( and functions... ) to your PATH run:
 ```
@@ -19,7 +19,7 @@ If your system doesn't request DHCP on the usbnet automatically, use `nmtui` and
 
 to make all commands work without issues, run `prepare_qos` to set some flags. The device will be rebooted
 
-If a command is needed and you don't have it, you will be promptet to install it. **If you are missing rust (the `cargo` command too)** you need to install it manually. That's because there are many ways to install it (remote script, package manager)
+If a command is needed and you don't have it, you will be promptet to install it. **If you are missing rust (the `cargo` command too)** you need to install it manually. That's because there are many ways to install it (remote script, package manager). **Also make sure docker is working and running**, `docker run hello-world` needs to succed (so you propably need to add your user to the docker group )
 
 ## Keys
 keys will be generated automatically in `keys/tmp/`. If you want to provide existing ones, do it in:

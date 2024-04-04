@@ -11,7 +11,7 @@ comp_opt_2="100%"
 
 source build_fbink.sh
 
-enter_repo "rootfs"
+enter_repo "$ROOTS_REPO"
 
 # Copy things
 cp $FBINK_PATH_KOBO opt/bin/fbink/fbink-kobo

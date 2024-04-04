@@ -114,7 +114,7 @@ function get_device() {
         QOS_DEVICE="$QOS_DEVICE_OVERWRITE"
         echo "Your device is $QOS_DEVICE because of overwrite"
     else
-        DETECTED_QOS_DEVICE=$(exec_remote_rootfs "cat /opt/qos_device")
+        DETECTED_QOS_DEVICE=$(exec_remote_rootfs "cat /opt/inkbox_device")
         if [[ -n $DETECTED_QOS_DEVICE && ${#DETECTED_QOS_DEVICE} -ge 3 && ${#DETECTED_QOS_DEVICE} -le 6 ]]; then
             QOS_DEVICE=$(echo $DETECTED_QOS_DEVICE | tr -d '\n\t\r ') # Cleaning is needed
             echo "Your device is $QOS_DEVICE because of detection"
@@ -123,4 +123,3 @@ function get_device() {
         fi
     fi
 }
-get_device

@@ -5,3 +5,4 @@ keys/**/
 keys/*.sqsh
 keys/**/*.sqsh
 !keys/tmp
+binaries/

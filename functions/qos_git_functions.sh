@@ -39,7 +39,8 @@ function qos_get_all_repos() {
     done
 }
 
-ink_repos=("rootfs" "qt5-kobo-platform-plugin" "FBInk" "qos" "kernel" "gui-bundle" "oobe-qos" "imgtool" "recoveryfs" "gui-rootfs" "qos-power-daemon" "epubtool" "diagnostics" "lockscreen" "umount-recursive")
+ink_repos=("rootfs" "qt5-kobo-platform-plugin" "FBInk" "qos" "kernel" "gui-bundle" "oobe-qos" "imgtool" "recoveryfs" "gui-rootfs" "qos-power-daemon" "epubtool" "diagnostics" "lockscreen" "umount-recursive" "toolchains")
+
 function qos_get_essential_repos() {
     icho "Getting essential repos"
     for repo in "${ink_repos[@]}"; do
