@@ -88,6 +88,14 @@ function login_qos() {
     sshpass -p "$QOS_PASSWORD" ssh "$QOS_USERNAME@$QOS_IP"
 }
 
+function login_qos_initrd() {
+    expect -c "
+    spawn telnet $QOS_IP
+    expect \"kobo login:\"
+    send \"$QOS_USERNAME\r\"
+    interact"
+}
+
 function sshfs_qos() {
     sshfs_path="/mnt/qos"
     if [ -z "$(ls -A $sshfs_path 2>/dev/null)" ]; then
