@@ -6,7 +6,7 @@ CORES=$(nproc)
 function compiler_path_add() {
     # export PATH=$PATH:$QOS_REPO_PATHS/kernel/toolchain/armv7l-linux-musleabihf-cross/bin
     # export PATH=$PATH:$QOS_REPO_PATHS/compiled-binaries/arm-kobo-linux-gnueabihf/bin/
-    MUSL_TOOLCHAIN_PATH="$QOS_REPO_PATHS/kernel/toolchain/armv7l-linux-musleabihf-cross/bin"
+    MUSL_TOOLCHAIN_PATH="$QOS_REPO_PATHS/toolchains/armv7l-linux-musleabihf-cross/bin"
     GLIBC_TOOLCHAIN_PATH="$QOS_REPO_PATHS/compiled-binaries/arm-kobo-linux-gnueabihf/bin/"
 
     add_to_path "$MUSL_TOOLCHAIN_PATH"
