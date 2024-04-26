@@ -56,6 +56,7 @@ function get_free_port() {
 tmp_file_check() {
     file_path="$QOS_TMP/$1"
     if [ ! -f "$file_path" ]; then
+        mkdir -p "$QOS_TMP"
         touch "$file_path"
         return 0
     else

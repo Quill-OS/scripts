@@ -43,9 +43,11 @@ done <<< "$directory_list"
 
 QOS_STOP=0
 
+source qos_other.sh
+
 source qos_load_variables.sh
 
-source qos_other.sh
+source qos_other.sh # Second time because we want variables to work in some of the functions there
 
 source qos_tools.sh
 if tmp_file_check "tools"; then

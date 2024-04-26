@@ -25,6 +25,7 @@ function clone_repo() {
         git pull
         cd $current_path
     fi
+    sync
 }
 
 function qos_get_all_repos() {
@@ -39,13 +40,14 @@ function qos_get_all_repos() {
     done
 }
 
-ink_repos=("rootfs" "qt5-kobo-platform-plugin" "FBInk" "qos" "kernel" "gui-bundle" "oobe-qos" "imgtool" "recoveryfs" "gui-rootfs" "qos-power-daemon" "epubtool" "diagnostics" "lockscreen" "umount-recursive" "toolchains")
+ink_repos=("rootfs" "qt5-kobo-platform-plugin" "FBInk" "quill" "kernel" "gui-bundle" "oobe-inkbox" "imgtool" "recoveryfs" "gui-rootfs" "inkbox-power-daemon" "epubtool" "diagnostics" "lockscreen" "umount-recursive" "toolchains" "compiled-binaries")
 
 function qos_get_essential_repos() {
     icho "Getting essential repos"
     for repo in "${ink_repos[@]}"; do
         clone_repo $repo
     done
+    sync
 }
 
 function enter_repo() {
